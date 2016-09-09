@@ -12,6 +12,7 @@
 		D7AF32DD1D817D91006D09DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7AF32DB1D817D91006D09DF /* Main.storyboard */; };
 		D7AF32DF1D817D91006D09DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7AF32DE1D817D91006D09DF /* Assets.xcassets */; };
 		D7AF32E21D817D91006D09DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7AF32E01D817D91006D09DF /* LaunchScreen.storyboard */; };
+		D7AF32EA1D817E7B006D09DF /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7AF32E91D817E7B006D09DF /* SpriteKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		D7AF32DE1D817D91006D09DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7AF32E11D817D91006D09DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7AF32E31D817D91006D09DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7AF32E91D817E7B006D09DF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7AF32EA1D817E7B006D09DF /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +41,7 @@
 		D7AF32CB1D817D91006D09DF = {
 			isa = PBXGroup;
 			children = (
+				D7AF32E91D817E7B006D09DF /* SpriteKit.framework */,
 				D7AF32D61D817D91006D09DF /* FlappyBird */,
 				D7AF32D51D817D91006D09DF /* Products */,
 			);
@@ -96,6 +100,7 @@
 				TargetAttributes = {
 					D7AF32D31D817D91006D09DF = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = N253LMJ3N3;
 					};
 				};
 			};
@@ -249,10 +254,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlappyBird/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.yushi.tanabe.FlappyBird;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -260,10 +268,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlappyBird/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.yushi.tanabe.FlappyBird;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
