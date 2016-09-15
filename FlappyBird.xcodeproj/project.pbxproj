@@ -13,6 +13,7 @@
 		D7AF32DF1D817D91006D09DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7AF32DE1D817D91006D09DF /* Assets.xcassets */; };
 		D7AF32E21D817D91006D09DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7AF32E01D817D91006D09DF /* LaunchScreen.storyboard */; };
 		D7AF32EA1D817E7B006D09DF /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7AF32E91D817E7B006D09DF /* SpriteKit.framework */; };
+		D7AF32EC1D8765D6006D09DF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AF32EB1D8765D5006D09DF /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D7AF32E11D817D91006D09DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7AF32E31D817D91006D09DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7AF32E91D817E7B006D09DF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		D7AF32EB1D8765D5006D09DF /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		D7AF32D61D817D91006D09DF /* FlappyBird */ = {
 			isa = PBXGroup;
 			children = (
+				D7AF32EB1D8765D5006D09DF /* GameScene.swift */,
 				D7AF32D71D817D91006D09DF /* AppDelegate.swift */,
 				D7AF32D91D817D91006D09DF /* ViewController.swift */,
 				D7AF32DB1D817D91006D09DF /* Main.storyboard */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7AF32EC1D8765D6006D09DF /* GameScene.swift in Sources */,
 				D7AF32DA1D817D91006D09DF /* ViewController.swift in Sources */,
 				D7AF32D81D817D91006D09DF /* AppDelegate.swift in Sources */,
 			);

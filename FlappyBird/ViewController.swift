@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,17 +24,19 @@ class ViewController: UIViewController {
         skView.showsNodeCount = true
         
         // ビューと同じサイズでシーンを作成する
-        let scene = SKScene(size:skView.frame.size)
+        let scene = GameScene(size:skView.frame.size)
         
         // ビューにシーンを表示する
         skView.presentScene(scene)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    // ステータスバーを消す --- ここから ---
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    } // --- ここまで追加 ---
 }
-
