@@ -48,6 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCloud()
         setupWall()
         setupBird()
+        setupScoreLabel()
     }
     
     // 地面
