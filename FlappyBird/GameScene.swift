@@ -58,49 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupScoreLabel()
     }
     
-    // アイテムを表示
-    func setupItem() {
-        // 地面の画像を読み込む
-        let itemTexture = SKTexture(imageNamed: "apple")
-        itemTexture.filteringMode = SKTextureFilteringMode.Nearest
-        
-        // 必要な枚数を計算
-        let needNumber = 1.0 + (frame.size.width / itemTexture.size().width)
-        
-        // スクロールするアクションを作成
-        // 左方向に画像一枚分スクロールさせるアクション
-        let moveItem = SKAction.moveByX(-itemTexture.size().width , y: 0, duration: 3.0)
-        
-        // 元の位置に戻すアクション
-        let resetItem = SKAction.moveByX(itemTexture.size().width, y: 0, duration: 0.0)
-        
-        // 左にスクロール->元の位置->左にスクロールと無限に繰り替えるアクション
-        let repeatScrollGround = SKAction.repeatActionForever(SKAction.sequence([moveItem, resetItem]))
-        
-        // スプライトを配置する
-        CGFloat(0).stride(to: needNumber, by: 1.0).forEach { i in
-            let sprite = SKSpriteNode(texture: itemTexture)
-            
-            // スプライトの表示する位置を指定する
-            sprite.position = CGPoint(x: i * sprite.size.width, y: itemTexture.size().height / 2)
-            
-            // スプライトにアクションを設定する
-            sprite.runAction(repeatScrollGround)
-            
-            // スプライトに物理演算を設定する
-            sprite.physicsBody = SKPhysicsBody(rectangleOfSize: itemTexture.size())
-            
-            // 衝突のカテゴリー設定
-            sprite.physicsBody?.categoryBitMask = itemCategory
-            
-            // 衝突の時に...
-            sprite.physicsBody?.dynamic = false
-            
-            // スプライトを追加する
-            scrollNode.addChild(sprite)
-        }
-    }
-
+    
 
     // 地面
     func setupGround() {
@@ -179,6 +137,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scrollNode.addChild(sprite)
         }
     }
+    
+    // アイテムを表示
+    func setupItem() {
+        // アイテムの画像を読み込む
+        let itemTexture = SKTexture(imageNamed: "apple")
+        itemTexture.filteringMode = .Linear
+        
+        // 移動する距離を計算
+        let movingDistance = CGFloat(self.frame.size.width + itemTexture.size().width)
+        
+        // 画面外まで移動するアクションを作成
+        let moveItem = SKAction.moveByX(-movingDistance, y: 0, duration:4.0)
+        
+        // 自身を取り除くアクションを作成
+        let removeItem = SKAction.removeFromParent()
+        
+            // 2つのアニメーションを順に実行するアクションを作成
+            let itemAnimation = SKAction.sequence([moveItem, removeItem])
+            
+            // アイテムを生成するアクションを作成
+            let createItemAnimation = SKAction.runBlock({
+                
+                // 画面のY軸の中央値
+                let center_y = self.frame.size.height / 2
+                // 壁のY座標を上下ランダムにさせるときの最大値
+                let random_y_range = self.frame.size.height / 4
+                // 1〜random_y_rangeまでのランダムな整数を生成
+                let random_y = CGFloat(arc4random_uniform( UInt32(random_y_range) ))
+                // Y軸の下限にランダムな値を足して、アイテムのY座標を決定
+                let under_item_y = CGFloat(center_y + random_y)
+                
+                // アイテムを作成
+                let item = SKSpriteNode(texture: itemTexture)
+                item.position = CGPoint(x: 0.0, y: under_item_y)
+                item.zPosition = -50.0 // 雲より手前、地面より奥
+                
+                // スプライトに物理演算を設定する
+                item.physicsBody = SKPhysicsBody(rectangleOfSize: itemTexture.size())
+                item.physicsBody?.categoryBitMask = self.itemCategory
+                
+                // 衝突の時に動かないように設定する
+                item.physicsBody?.dynamic = false
+                
+                item.runAction(itemAnimation)
+                
+                self.itemNode.addChild(item)
+            })
+            
+            // 次の壁作成までの待ち時間のアクションを作成
+            let waitAnimation = SKAction.waitForDuration(2)
+            
+            // アイテムを作成->待ち時間->アイテムを作成を無限に繰り替えるアクションを作成
+            let repeatForeverAnimation = SKAction.repeatActionForever(SKAction.sequence([createItemAnimation, waitAnimation]))
+            
+            runAction(repeatForeverAnimation)
+        }
+        
+    }
+
     
     // 壁
     func setupWall() {
