@@ -12,6 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scrollNode:SKNode!
     var wallNode:SKNode!
+    var itemNode:SKNode!
     var bird:SKSpriteNode!
     
     // 衝突判定カテゴリー ↓追加
@@ -19,6 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let groundCategory: UInt32 = 1 << 1     // 0...00010
     let wallCategory: UInt32 = 1 << 2       // 0...00100
     let scoreCategory: UInt32 = 1 << 3      // 0...01000
+    let itemCategory: UInt32 = 1 << 4       // 0...10000
     
     // スコア用
     var score = 0
@@ -44,13 +46,62 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         wallNode = SKNode()
         scrollNode.addChild(wallNode)
         
+        // アイテム用のノード
+        itemNode = SKNode()
+        addChild(itemNode)
+        
         setupGround()
         setupCloud()
         setupWall()
         setupBird()
+        setupItem()
         setupScoreLabel()
     }
     
+    // アイテムを表示
+    func setupItem() {
+        // 地面の画像を読み込む
+        let itemTexture = SKTexture(imageNamed: "apple")
+        itemTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        // 必要な枚数を計算
+        let needNumber = 1.0 + (frame.size.width / itemTexture.size().width)
+        
+        // スクロールするアクションを作成
+        // 左方向に画像一枚分スクロールさせるアクション
+        let moveItem = SKAction.moveByX(-itemTexture.size().width , y: 0, duration: 3.0)
+        
+        // 元の位置に戻すアクション
+        let resetItem = SKAction.moveByX(itemTexture.size().width, y: 0, duration: 0.0)
+        
+        // 左にスクロール->元の位置->左にスクロールと無限に繰り替えるアクション
+        let repeatScrollGround = SKAction.repeatActionForever(SKAction.sequence([moveItem, resetItem]))
+        
+        // スプライトを配置する
+        CGFloat(0).stride(to: needNumber, by: 1.0).forEach { i in
+            let sprite = SKSpriteNode(texture: itemTexture)
+            
+            // スプライトの表示する位置を指定する
+            sprite.position = CGPoint(x: i * sprite.size.width, y: itemTexture.size().height / 2)
+            
+            // スプライトにアクションを設定する
+            sprite.runAction(repeatScrollGround)
+            
+            // スプライトに物理演算を設定する
+            sprite.physicsBody = SKPhysicsBody(rectangleOfSize: itemTexture.size())
+            
+            // 衝突のカテゴリー設定
+            sprite.physicsBody?.categoryBitMask = itemCategory
+            
+            // 衝突の時に...
+            sprite.physicsBody?.dynamic = false
+            
+            // スプライトを追加する
+            scrollNode.addChild(sprite)
+        }
+    }
+
+
     // 地面
     func setupGround() {
         // 地面の画像を読み込む
@@ -216,6 +267,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         runAction(repeatForeverAnimation)
     }
     
+    
     // 鳥
     func setupBird() {
         // 鳥の画像を2種類読み込む
@@ -241,7 +293,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // 衝突のカテゴリー設定
         bird.physicsBody?.categoryBitMask = birdCategory // ←追加
         bird.physicsBody?.collisionBitMask = groundCategory | wallCategory // ←追加
-        bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory // ←追加
+        bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory | itemCategory// ←追加
         
         // アニメーションを設定
         bird.runAction(flap)
@@ -310,6 +362,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bird.zRotation = 0.0
         
         wallNode.removeAllChildren()
+        itemNode.removeAllChildren()
         
         bird.speed = 1
         scrollNode.speed = 1
