@@ -372,7 +372,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // 画面のY軸の中央値
             let center_y = self.frame.size.height / 2
-            // 壁のY座標を上下ランダムにさせるときの最大値
+            // アイテムのY座標を上下ランダムにさせるときの最大値
             let random_y_range = self.frame.size.height / 4
             // 1〜random_y_rangeまでのランダムな整数を生成
             let random_y = CGFloat(arc4random_uniform( UInt32(random_y_range) ))
@@ -395,8 +395,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             self.itemNode.addChild(item)
         })
-        // 次の壁作成までの待ち時間のアクションを作成
-        let waitAnimation = SKAction.waitForDuration(2)
+        // 次のアイテム作成までの待ち時間のアクションを作成
+        let waitAnimation = SKAction.waitForDuration(8)
         
         // アイテムを作成->待ち時間->アイテムを作成を無限に繰り替えるアクションを作成
         let repeatForeverAnimation = SKAction.repeatActionForever(SKAction.sequence([createItemAnimation, waitAnimation]))
