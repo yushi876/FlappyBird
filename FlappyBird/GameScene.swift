@@ -22,9 +22,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreCategory: UInt32 = 1 << 3      // 0...01000
     let itemCategory: UInt32 = 1 << 4       // 0...10000
     
-    // スコア用
+    // スコア用（アイテムを含む）
     var score = 0
     var scoreLabelNode:SKLabelNode!
+    
+    var itemScore = 0
+    var itemScoreLabelNode:SKLabelNode!
+    
     var bestScoreLabelNode:SKLabelNode!
     let userDefaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
@@ -293,6 +297,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 bestScoreLabelNode.text = "Best Score:\(bestScore)"
                 userDefaults.setInteger(bestScore, forKey: "BEST")
                 userDefaults.synchronize()
+            
+            } else if (contact.bodyA.categoryBitMask & itemCategory) == itemCategory || (contact.bodyB.categoryBitMask & itemCategory) == itemCategory { // アイテムと衝突した時に
+                SKAction.removeFromParent() // アイテムを消す
             }
         } else {
             // 壁か地面と衝突した
@@ -381,7 +388,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // アイテムを作成
             let item = SKSpriteNode(texture: itemTexture)
-            item.position = CGPoint(x: self.frame.size.width + itemTexture.size().width / 2, y: under_item_y)
+            item.position = CGPoint(x: self.frame.size.width + itemTexture.size().width * 2, y: under_item_y)
             item.zPosition = -50.0 // 雲より手前、地面より奥
             
             // スプライトに物理演算を設定する
