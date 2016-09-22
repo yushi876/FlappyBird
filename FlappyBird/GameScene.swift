@@ -334,7 +334,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scrollNode.speed = 1
     }
     
-    // スコアの初期化を行うメソッド
+    // スコアの初期化を行うメソッド（アイテムを含む）
     func setupScoreLabel() {
         score = 0
         scoreLabelNode = SKLabelNode()
@@ -363,7 +363,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         itemTexture.filteringMode = .Linear
         
         // 移動する距離を計算
-        let movingDistance = CGFloat(self.frame.size.width + itemTexture.size().width)
+        let movingDistance = CGFloat(self.frame.size.width + itemTexture.size().width * 2)
         
         // 画面外まで移動するアクションを作成
         let moveItem = SKAction.moveByX(-movingDistance, y: 0, duration:4.0)
